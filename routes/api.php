@@ -19,5 +19,6 @@ Route::middleware('auth:api')->group(function(){
         return $request->user();
     });
 
+    Route::get('/posts', [App\Http\Controllers\PostController::class, 'index']);
     Route::post('/posts', [App\Http\Controllers\PostController::class, 'store']);
 });
