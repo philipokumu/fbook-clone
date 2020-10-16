@@ -1,7 +1,7 @@
 import { startCase } from 'lodash';
 import vue from 'vue';
 import vueRouter from 'vue-router';
-import Start from './Views/Start';
+import NewsFeed from './Views/NewsFeed';
 
 vue.use(vueRouter);
 
@@ -10,8 +10,8 @@ export default new vueRouter({
 
     routes: [
         {
-            path: '/', name: 'home', component: Start,
+            path: '/', name: 'home', component: NewsFeed,
         }
-]
+    ]
 });
 

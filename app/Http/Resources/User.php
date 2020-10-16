@@ -17,13 +17,13 @@ class User extends JsonResource
         return [
             'data'=>[
                 'type'=>'users',
-                'post_id'=>$this->id,
+                'user_id'=>$this->id,
                 'attributes'=>[
                     'name'=>$this->name,
                 ]
             ],
             'links'=> [
-                'self'=> url('/posts/'.$this->id),
+                'self'=> url('/users/'.$this->id),
             ]
         ];
     }
