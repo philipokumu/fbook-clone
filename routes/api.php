@@ -23,6 +23,7 @@ Route::middleware('auth:api')->group(function () {
         '/posts' => App\Http\Controllers\PostController::class,
         '/users' => App\Http\Controllers\UserController::class,
         '/users/{user}/posts' => App\Http\Controllers\UserPostController::class,
+        '/friend-request' => App\Http\Controllers\FriendRequestController::class,
     ]);
 
 });

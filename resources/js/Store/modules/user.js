@@ -9,7 +9,7 @@ const getters = {
     }
 };
 
-//Dispatches action, this is where the mounted logic is placed
+//Dispatches action, this is where the mounted logic is placed. Actions can be asynchronous.
 const actions = {
     fetchAuthUser({commit, state}){
         axios.get('/api/auth-user')
@@ -22,7 +22,7 @@ const actions = {
     }
 };
 
-//Mutations is how we change the state
+//Mutations is how we change the state. And can be traced on frontend. Unlike using only getters. Are synchronous
 const mutations = {
     setAuthUser(state, user){
         state.user = user;
