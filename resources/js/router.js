@@ -2,6 +2,7 @@ import { startCase } from 'lodash';
 import vue from 'vue';
 import vueRouter from 'vue-router';
 import NewsFeed from './Views/NewsFeed';
+import UserShow from './Views/Users/Show';
 
 vue.use(vueRouter);
 
@@ -11,6 +12,10 @@ export default new vueRouter({
     routes: [
         {
             path: '/', name: 'home', component: NewsFeed,
+        },
+
+        {
+            path: '/users/:userId', name: 'user.show', component: UserShow,
         }
     ]
 });
