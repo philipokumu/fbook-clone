@@ -24,6 +24,7 @@ Route::middleware('auth:api')->group(function () {
         '/users' => App\Http\Controllers\UserController::class,
         '/users/{user}/posts' => App\Http\Controllers\UserPostController::class,
         '/friend-request' => App\Http\Controllers\FriendRequestController::class,
+        '/friend-request-response' => App\Http\Controllers\FriendRequestResponseController::class,
     ]);
 
 });

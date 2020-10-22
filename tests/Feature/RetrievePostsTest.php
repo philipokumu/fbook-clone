@@ -27,8 +27,8 @@ class RetrievePostsTest extends TestCase
 
         $response = $this->get('/api/posts'); //We need the api to be accessed for this posts
 
-        $response->assertStatus(200)
-            ->assertJson([
+        $response->assertStatus(200) //We need to assert everything is okay
+            ->assertJson([ //We need to assert the correct JSON format is returned
                 'data' => [
                     [
                         'data'=> [
