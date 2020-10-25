@@ -16,7 +16,7 @@ class FriendsTest extends TestCase
     /** @test */
     public function a_user_can_send_a_friend_request()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
 
         //Testing that a user has sent out a friend request
         $this->actingAs($user = User::factory()->create(),'api');
@@ -193,4 +193,42 @@ class FriendsTest extends TestCase
             ]
         ]);
     }
+
+    //Validation
+    /** @test */
+    public function a_friend_id_is_required_for_friend_requests()
+    {
+        //Create sending user
+        $this->actingAs($user = User::factory()->create(),'api');
+
+        //Send friend request without friend_id
+        $response = $this->post('/api/friend-request', [
+            'friend_id' => '',
+        ]);
+
+        $responseString = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('friend_id', $responseString['errors']['meta']);
+
+    }
+
+    /** @test */
+    public function a_user_id_and_status_is_required_for_friend_request_responses()
+    {
+        //Create a user for accepting friend requests
+        $response = $this->actingAs($user = User::factory()->create(),'api')
+                ->post('/api/friend-request-response', [
+                    'user_id' => '',
+                    'status' => ''
+                ])->assertStatus(422);
+
+        //Convert this to JSON as Laravel by default expects as to be within a web application but we are using an api with no Laravel frontend
+        $responseString = json_decode($response->getContent(), true);
+
+        //Assert availability of the two required fields
+        $this->assertArrayHasKey('user_id', $responseString['errors']['meta']);
+        $this->assertArrayHasKey('status', $responseString['errors']['meta']);
+
+    }
+
 }

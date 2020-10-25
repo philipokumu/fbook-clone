@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use App\Exceptions\ValidationErrorException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +36,14 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceOf ValidationException) {
+            throw new ValidationErrorException(json_encode($exception->errors()));
+        }
+
+        return parent::render($request, $exception);
     }
 }
