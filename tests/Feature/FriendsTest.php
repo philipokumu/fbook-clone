@@ -213,7 +213,7 @@ class FriendsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_id_and_status_is_required_for_friend_request_responses()
+    public function a_user_id_and_status_is_required_for_accepting_a_friend_request_responses()
     {
         //Create a user for accepting friend requests
         $response = $this->actingAs($user = User::factory()->create(),'api')
@@ -228,6 +228,158 @@ class FriendsTest extends TestCase
         //Assert availability of the two required fields
         $this->assertArrayHasKey('user_id', $responseString['errors']['meta']);
         $this->assertArrayHasKey('status', $responseString['errors']['meta']);
+
+    }
+
+    /** @test */
+    public function a_friendship_is_retrieved_when_fetching_a_profile()
+    {
+        $this->actingAs($user = User::factory()->create(),'api');
+
+        $anotherUser = User::factory()->create();
+
+        //Inject a valid friendrequest into the database
+        $friendRequest = Friend::create([
+            'user_id' => $user->id,
+            'friend_id' => $anotherUser->id,
+            'confirmed_at' => now()->subDay(),
+            'status' => 1,
+        ]);
+
+        //Assert a friendship is fetched along with the other users profile
+        $this->get('/api/users/'.$anotherUser->id)
+            ->assertStatus(200)
+            ->assertJson([
+                'data'=> [
+                    'attributes' => [
+                        'friendship' => [
+                            'data' => [
+                                'friend_request_id' => $friendRequest->id,
+                                'attributes' => [
+                                    'confirmed_at' => '1 day ago',
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+            ]);
+    }
+
+    /** @test */
+    public function an_inverse_friendship_is_retrieved_when_fetching_a_profile()
+    {
+        $this->actingAs($user = User::factory()->create(),'api');
+
+        $anotherUser = User::factory()->create();
+
+        //Inject a valid friendrequest into the database
+        $friendRequest = Friend::create([
+            'friend_id' => $user->id,
+            'user_id' => $anotherUser->id,
+            'confirmed_at' => now()->subDay(),
+            'status' => 1,
+        ]);
+
+        //Assert a friendship is fetched along with the other users profile
+        $this->get('/api/users/'.$anotherUser->id)
+            ->assertStatus(200)
+            ->assertJson([
+                'data'=> [
+                    'attributes' => [
+                        'friendship' => [
+                            'data' => [
+                                'friend_request_id' => $friendRequest->id,
+                                'attributes' => [
+                                    'confirmed_at' => '1 day ago',
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+            ]);
+    }
+
+        /** @test */
+        public function friend_request_can_be_ignored()
+        {
+            $this->withoutExceptionHandling();
+            //Create the friend requesting user first: friend 1
+            $this->actingAs($user = User::factory()->create(),'api');
+    
+             //Create the friend accepting user second: friend 2
+            $anotherUser = User::factory()->create();
+    
+            //Assert that friend 1 is sending the friend request successfully
+            $this->post('/api/friend-request', [
+                'friend_id' => $anotherUser->id,
+            ])->assertStatus(200);
+    
+            //Now assert that friend 2 is ignoring successfully friend 1 which is deleting the record
+            $response = $this->actingAs($anotherUser, 'api')
+                            ->delete('/api/friend-request-response/delete', [
+                                'user_id' => $user->id,
+                            ])->assertStatus(204);
+    
+            //Testing that the request is NOT saved in a database record
+            $friendRequest = Friend::first();
+    
+            $this->assertNull($friendRequest);
+
+            $response->assertNoContent();
+    
+        }
+
+        //Validation
+        /** @test */
+    public function only_the_recipient_can_ignore_a_friend_request()
+    {
+        //Create sending user
+        $this->actingAs($user = User::factory()->create(),'api');
+
+        //Create receiving user
+        $anotherUser = User::factory()->create();
+
+        $this->post('/api/friend-request', [
+            'friend_id' => $anotherUser->id,
+        ])->assertStatus(200);
+
+        //Create yet another user to test that they cannot ignore a friend request that is not for them
+        $response = $this->actingAs(User::factory()->create(), 'api')
+                        ->delete('/api/friend-request-response/delete', [
+                            'user_id' => $user->id,
+                        ])->assertStatus(404);
+
+        //Now test that the friend request data is not affected by the third user hitting the api
+        $friendRequest = Friend::first();
+
+        //Asserting null because its an invalid request from wrong user and thus it is not confirmed nor a status of 1
+        $this->assertNull($friendRequest->confirmed_at);
+
+        $this->assertNull($friendRequest->status);
+
+        $response->assertJson([
+            'errors'=> [
+                'code' => 404,
+                'title' => 'Friend request not found',
+                'detail' => 'Unable to locate the friend request with the given information',
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function a_user_id_and_status_is_required_for_ignoring_friend_request_responses()
+    {
+        //Create a user for accepting friend requests
+        $response = $this->actingAs($user = User::factory()->create(),'api')
+                ->delete('/api/friend-request-response/delete', [
+                    'user_id' => '',
+                ])->assertStatus(422);
+
+        //Convert this to JSON as Laravel by default expects as to be within a web application but we are using an api with no Laravel frontend
+        $responseString = json_decode($response->getContent(), true);
+
+        //Assert availability of the two required fields
+        $this->assertArrayHasKey('user_id', $responseString['errors']['meta']);
 
     }
 
