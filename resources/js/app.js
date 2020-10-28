@@ -1,11 +1,11 @@
 require('./bootstrap');
 
-import Vue from 'vue';
+import vue from 'vue';
 import router from './router';
 import App from './Components/App';
-import store from './store';
+import store from './Store';
 
-const app = new Vue({
+const app = new vue({
     el: '#app',
 
     components: {

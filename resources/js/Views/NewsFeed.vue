@@ -4,12 +4,14 @@
         <p v-if="loading">Loading posts...</p>
         <Post v-for="post in posts.data" v-else :key="post.data.post_id" :post="post"/>
 
+        <p v-if="! loading && posts.data.length < 1">No posts found</p>
+
     </div>
 </template>
 
 <script>
-import NewPost from '../components/NewPost';
-import Post from '../components/Post';
+import NewPost from '../Components/NewPost';
+import Post from '../Components/Post';
 
 export default {
     name: "NewsFeed",

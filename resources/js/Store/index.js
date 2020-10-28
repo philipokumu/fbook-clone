@@ -1,13 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex'
-import User from './modules/user'
-import Title from './modules/title'
+import vue from 'vue';
+import vuex from 'vuex'
+import user from './modules/user'
+import title from './modules/title'
+import profile from './modules/profile'
 
-Vue.use(Vuex)
+vue.use(vuex)
 
-export default new Vuex.Store({
+export default new vuex.Store({
     modules: {
-        User, Title
+        user, title, profile
     }
 })
 
