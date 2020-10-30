@@ -27,4 +27,15 @@ class Friend extends Model
                 ->where('user_id', $userId);
             })->first();
     }
+
+    //A function to check whether the user is friend request sender or receiver and then call correct data
+    public static function friendships()
+    {
+        return (new static())
+            ->whereNotNull('confirmed_at')
+            ->where(function($query){
+                return $query->where('user_id', auth()->user()->id)
+                ->where('friend_id', auth()->user()->id);
+            })->get();
+    }
 }

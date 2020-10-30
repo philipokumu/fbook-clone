@@ -29,8 +29,12 @@ const getters = {
 
     //For button text based on the friendship relationship. Since there are two defaults, no need to place it in state
     friendButtonText: (state, getters, rootState)=>{
+        //Check that the user's profile is not the authenticated user
+        if (getters.user.data.user_id === rootState.User.user.data.user_id) {
+            return '';
+        }
         //if No friendship between the 2 users
-        if (getters.friendship === null) {
+        else if (getters.friendship === null) {
             return 'Add friend';
         }
         //If there is a friend request sent out and the authenticated user now is not the one who was requested friendship
@@ -84,7 +88,11 @@ const actions = {
     },
 
     //Loaded when friend request button is clicked
-    sendFriendRequest({commit,state}, friendId) {     
+    sendFriendRequest({commit,getters}, friendId) {   
+        //First check that you are not sending the request twice
+        if (getters.friendButtonText !== 'Add friend') {
+            return;
+        }
         // Send the friend request to the api database
         axios.post('/api/friend-request/',{'friend_id': friendId})
         .then (res => {

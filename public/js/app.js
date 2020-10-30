@@ -2146,6 +2146,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_NewPost__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Components/NewPost */ "./resources/js/Components/NewPost.vue");
 /* harmony import */ var _Components_Post__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/Post */ "./resources/js/Components/Post.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2157,6 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2165,23 +2173,13 @@ __webpack_require__.r(__webpack_exports__);
     NewPost: _Components_NewPost__WEBPACK_IMPORTED_MODULE_0__["default"],
     Post: _Components_Post__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  data: function data() {
-    return {
-      posts: null,
-      loading: true
-    };
-  },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/api/posts').then(function (res) {
-      _this.posts = res.data;
-    })["catch"](function (error) {
-      console.log("Unable to fetch data");
-    })["finally"](function () {
-      _this.loading = false;
-    });
-  }
+    this.$store.dispatch('fetchNewsPosts');
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    posts: 'newsPosts',
+    newsStatus: 'newsStatus'
+  }))
 });
 
 /***/ }),
@@ -20473,7 +20471,7 @@ var render = function() {
     [
       _c("NewPost"),
       _vm._v(" "),
-      _vm.loading
+      _vm.newsStatus.newsPostsStatus === "loading"
         ? _c("p", [_vm._v("Loading posts...")])
         : _vm._l(_vm.posts.data, function(post) {
             return _c("Post", { key: post.data.post_id, attrs: { post: post } })
@@ -37515,6 +37513,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/user */ "./resources/js/Store/modules/user.js");
 /* harmony import */ var _modules_title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/title */ "./resources/js/Store/modules/title.js");
 /* harmony import */ var _modules_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/profile */ "./resources/js/Store/modules/profile.js");
+/* harmony import */ var _modules_posts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/posts */ "./resources/js/Store/modules/posts.js");
+
 
 
 
@@ -37525,9 +37525,65 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   modules: {
     User: _modules_user__WEBPACK_IMPORTED_MODULE_2__["default"],
     title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"],
-    profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"]
+    profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"],
+    posts: _modules_posts__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/Store/modules/posts.js":
+/*!*********************************************!*\
+  !*** ./resources/js/Store/modules/posts.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  newsPosts: null,
+  newsPostsStatus: null
+};
+var getters = {
+  newsPosts: function newsPosts(state) {
+    return state.posts;
+  },
+  newsStatus: function newsStatus(state) {
+    return {
+      newsPostsStatus: state.newsPostsStatus
+    };
+  }
+}; //Dispatches action, this is where the mounted logic is placed. Actions can be asynchronous.
+
+var actions = {
+  fetchNewsPosts: function fetchNewsPosts(_ref) {
+    var commit = _ref.commit,
+        state = _ref.state;
+    commit('setPostsStatus', 'loading');
+    axios.get('/api/posts').then(function (res) {
+      commit('setPosts', res.data);
+      commit('setPostsStatus', 'success');
+    })["catch"](function (error) {
+      commit('setPostsStatus', 'error');
+    });
+  }
+}; //Mutations is how we change the state. And can be traced on frontend. Unlike using only getters. Are synchronous
+
+var mutations = {
+  setPostsStatus: function setPostsStatus(state, status) {
+    state.newsPostsStatus = status;
+  },
+  setPosts: function setPosts(state, posts) {
+    state.newsPosts = posts;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
@@ -37569,16 +37625,19 @@ var getters = {
   },
   //For button text based on the friendship relationship. Since there are two defaults, no need to place it in state
   friendButtonText: function friendButtonText(state, getters, rootState) {
-    //if No friendship between the 2 users
-    if (getters.friendship === null) {
-      return 'Add friend';
-    } //If there is a friend request sent out and the authenticated user now is not the one who was requested friendship
-    else if (getters.friendship.data.attributes.confirmed_at === null && getters.friendship.data.attributes.friend_id !== rootState.User.user.data.user_id) {
-        return 'Pending friend request';
-      } //If the friend request is already confirmed with a timestamp
-      else if (getters.friendship.data.attributes.confirmed_at !== null) {
-          return '';
-        } //Otherwise the default is that you are the friend requested user
+    //Check that the user's profile is not the authenticated user
+    if (getters.user.data.user_id === rootState.User.user.data.user_id) {
+      return '';
+    } //if No friendship between the 2 users
+    else if (getters.friendship === null) {
+        return 'Add friend';
+      } //If there is a friend request sent out and the authenticated user now is not the one who was requested friendship
+      else if (getters.friendship.data.attributes.confirmed_at === null && getters.friendship.data.attributes.friend_id !== rootState.User.user.data.user_id) {
+          return 'Pending friend request';
+        } //If the friend request is already confirmed with a timestamp
+        else if (getters.friendship.data.attributes.confirmed_at !== null) {
+            return '';
+          } //Otherwise the default is that you are the friend requested user
 
 
     return 'Accept';
@@ -37618,8 +37677,14 @@ var actions = {
   //Loaded when friend request button is clicked
   sendFriendRequest: function sendFriendRequest(_ref3, friendId) {
     var commit = _ref3.commit,
-        state = _ref3.state;
-    // Send the friend request to the api database
+        getters = _ref3.getters;
+
+    //First check that you are not sending the request twice
+    if (getters.friendButtonText !== 'Add friend') {
+      return;
+    } // Send the friend request to the api database
+
+
     axios.post('/api/friend-request/', {
       'friend_id': friendId
     }).then(function (res) {
