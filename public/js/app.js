@@ -20471,7 +20471,7 @@ var render = function() {
     [
       _c("NewPost"),
       _vm._v(" "),
-      _vm.newsStatus.newsPostsStatus === "loading"
+      _vm.newsStatus.newsPostsStatus == "loading"
         ? _c("p", [_vm._v("Loading posts...")])
         : _vm._l(_vm.posts.data, function(post) {
             return _c("Post", { key: post.data.post_id, attrs: { post: post } })
@@ -37623,7 +37623,8 @@ var getters = {
   friendship: function friendship(state) {
     return state.user.data.attributes.friendship;
   },
-  //For button text based on the friendship relationship. Since there are two defaults, no need to place it in state
+  //For button text based on the friendship relationship. Since there are two defaults, 
+  //no need to place it in state
   friendButtonText: function friendButtonText(state, getters, rootState) {
     //Check that the user's profile is not the authenticated user
     if (getters.user.data.user_id === rootState.User.user.data.user_id) {
@@ -37631,7 +37632,8 @@ var getters = {
     } //if No friendship between the 2 users
     else if (getters.friendship === null) {
         return 'Add friend';
-      } //If there is a friend request sent out and the authenticated user now is not the one who was requested friendship
+      } //If there is a friend request sent out,
+      //and the authenticated user is the one who sent the friend request
       else if (getters.friendship.data.attributes.confirmed_at === null && getters.friendship.data.attributes.friend_id !== rootState.User.user.data.user_id) {
           return 'Pending friend request';
         } //If the friend request is already confirmed with a timestamp

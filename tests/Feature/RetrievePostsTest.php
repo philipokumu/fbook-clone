@@ -25,7 +25,7 @@ class RetrievePostsTest extends TestCase
         //We need another user to retrieve their posts too if they are friends with user 1
         $anotherUser = User::factory()->create(); 
 
-        $posts = Post::factory(2)->create(['user_id' => $user->id]); //We need some posts
+        $posts = Post::factory(2)->create(['user_id' => $anotherUser->id]); //We need some posts
         Friend::create([
             'user_id' => $user->id,
             'friend_id' => $anotherUser->id,

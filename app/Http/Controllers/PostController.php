@@ -22,7 +22,7 @@ class PostController extends Controller
 
         // return new PostCollection(request()->posts);
         return new PostCollection(
-            Post::whereIn('user_id', [$friends->pluck('user_id'),$friends->pluck('friend_id')])->get()
+            Post::whereIn('user_id', [$friends->pluck('user_id'), $friends->pluck('friend_id')])->get()
         );
     }
 

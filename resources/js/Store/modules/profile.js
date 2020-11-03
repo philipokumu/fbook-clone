@@ -27,7 +27,8 @@ const getters = {
         return state.user.data.attributes.friendship;
     },
 
-    //For button text based on the friendship relationship. Since there are two defaults, no need to place it in state
+    //For button text based on the friendship relationship. Since there are two defaults, 
+    //no need to place it in state
     friendButtonText: (state, getters, rootState)=>{
         //Check that the user's profile is not the authenticated user
         if (getters.user.data.user_id === rootState.User.user.data.user_id) {
@@ -37,7 +38,8 @@ const getters = {
         else if (getters.friendship === null) {
             return 'Add friend';
         }
-        //If there is a friend request sent out and the authenticated user now is not the one who was requested friendship
+        //If there is a friend request sent out,
+        //and the authenticated user is the one who sent the friend request
         else if (getters.friendship.data.attributes.confirmed_at === null 
             && getters.friendship.data.attributes.friend_id !== rootState.User.user.data.user_id){
             return 'Pending friend request';
