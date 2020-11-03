@@ -5,7 +5,7 @@ const state = {
 
 const getters = {
     newsPosts: state => {
-        return state.posts;
+        return state.newsPosts;
     },
     newsStatus: state => {
         return {

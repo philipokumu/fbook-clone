@@ -37547,7 +37547,7 @@ var state = {
 };
 var getters = {
   newsPosts: function newsPosts(state) {
-    return state.posts;
+    return state.newsPosts;
   },
   newsStatus: function newsStatus(state) {
     return {
