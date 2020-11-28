@@ -1,6 +1,6 @@
 const state = {
     newsPosts: null,
-    newsPostsStatus: null,
+    newsPostsStatus: false,
     postMessage: '',
 };
 

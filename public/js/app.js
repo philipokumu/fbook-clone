@@ -38260,7 +38260,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 __webpack_require__.r(__webpack_exports__);
 var state = {
   newsPosts: null,
-  newsPostsStatus: null,
+  newsPostsStatus: false,
   postMessage: ''
 };
 var getters = {
@@ -38339,9 +38339,9 @@ __webpack_require__.r(__webpack_exports__);
 //Default data
 var state = {
   user: null,
-  userStatus: null,
+  userStatus: false,
   posts: null,
-  postsStatus: null
+  postsStatus: false
 }; //Get data from vuex state to component
 
 var getters = {

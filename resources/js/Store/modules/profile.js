@@ -1,9 +1,9 @@
 //Default data
 const state = {
     user: null,
-    userStatus: null,
+    userStatus: false,
     posts: null,
-    postsStatus: null,
+    postsStatus: false,
 };
 
 //Get data from vuex state to component
