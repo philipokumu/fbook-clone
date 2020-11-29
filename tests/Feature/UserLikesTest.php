@@ -8,15 +8,10 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Post;
 
-class LikesTest extends TestCase
+class UserLikesTest extends TestCase
 {
     use RefreshDatabase;
     // use DatabaseMigrations;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
 
      /** @test */
     public function a_user_can_like_a_post()
@@ -25,7 +20,7 @@ class LikesTest extends TestCase
         //Create user
         $this->actingAs($user = User::factory()->create(),'api');
         //Create post
-        $post = Post::factory()->create(['id'=>123]);
+        $post = Post::factory()->create(['id'=>223]);
 
         //Create a post request
         $response = $this->post('/api/posts/'.$post->id.'/like')
@@ -41,14 +36,13 @@ class LikesTest extends TestCase
                         'attributes'=>[]
                     ],
                     'links'=>[
-                        'self'=>url('/posts/123'),
+                        'self'=>url('/posts/223'),
                     ]
                 ]
             ],'links'=>[
                 'self'=>url('/posts'),
             ]
         ]);
-
     }
 
     /** @test */
@@ -59,7 +53,7 @@ class LikesTest extends TestCase
         //Create post
         $post = Post::factory()->create(['id'=>123, 'user_id'=>$user->id]);
 
-        //Create a post request
+        //Create a post like request
         $this->post('/api/posts/'.$post->id.'/like')->assertStatus(200);
 
         $response = $this->get('/api/posts')
@@ -88,6 +82,5 @@ class LikesTest extends TestCase
                     ]
                 ]
             ]);
-        
     }
 }
