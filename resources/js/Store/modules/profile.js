@@ -2,8 +2,6 @@
 const state = {
     user: null,
     userStatus: false,
-    posts: null,
-    postsStatus: false,
 };
 
 //Get data from vuex state to component
@@ -11,10 +9,6 @@ const getters = {
     //For loading a user profile
     user: state => {
         return state.user;
-    },
-    //For loading a user's posts
-    posts: state => {
-        return state.posts;
     },
     status: state => {
         return {
@@ -73,22 +67,6 @@ const actions = {
         });
     },
 
-    //Loaded when loading a profile
-    fetchUserPosts({commit, dispatch}, userId){
-        commit ('setPostsStatus','loading');
-
-        //Fetch specific user posts for their profile
-        axios.get('/api/users/'+ userId + '/posts')
-            .then(res => {
-           commit('setPosts', res.data);
-           commit ('setPostsStatus','success');
-        })
-        .catch(error=>{
-            console.log('Unable to fetch user from the server');
-            commit ('setPostsStatus','error');
-        });
-    },
-
     //Loaded when friend request button is clicked
     sendFriendRequest({commit,getters}, friendId) {   
         //First check that you are not sending the request twice
@@ -133,24 +111,14 @@ const mutations = {
     setUser(state, user){
         state.user = user;
     },
-    setPosts(state, posts){
-        state.posts = posts;
-    },
-
     //Also set alongside user but this takes care of the current friendship between authenticated user and the other user
     setUserFriendship(state,friendship){
         state.user.data.attributes.friendship = friendship;
     },
-
     //Loaded as a result of opening any user profile
     setUserStatus(state, status){
         state.userStatus = status;
     },
-    //Loaded as a result of opening any user profile
-    setPostsStatus(state, posts){
-        state.postsStatus = posts;
-    },
-
 };
 
 export default {

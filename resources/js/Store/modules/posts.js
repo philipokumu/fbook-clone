@@ -1,16 +1,16 @@
 const state = {
-    newsPosts: null,
-    newsPostsStatus: false,
+    posts: null,
+    postsStatus: false,
     postMessage: '',
 };
 
 const getters = {
-    newsPosts: state => {
-        return state.newsPosts;
+    posts: state => {
+        return state.posts;
     },
     newsStatus: state => {
         return {
-            newsPostsStatus: state.newsPostsStatus,
+            postsStatus: state.postsStatus,
         };
     },
     postMessage: state => {
@@ -52,29 +52,54 @@ const actions = {
             .catch(error =>{
                 // commit('setPostsStatus', 'error');
             });
-    }
+    },
+    commentPost({commit, state}, data){
+        axios.post('/api/posts/'+ data.postId + '/comment',{body: data.body})
+            .then(res => {
+                commit('pushComments', {comments: res.data, postKey: data.postKey});
+            })
+            .catch(error =>{
+                // commit('setPostsStatus', 'error');
+            });
+    },
 
+    //Loaded when loading a profile
+    fetchUserPosts({commit, dispatch}, userId){
+        commit ('setPostsStatus','loading');
 
-
+        //Fetch specific user posts for their profile
+        axios.get('/api/users/'+ userId + '/posts')
+            .then(res => {
+            commit('setPosts', res.data);
+            commit ('setPostsStatus','success');
+        })
+        .catch(error=>{
+            console.log('Unable to fetch user from the server');
+            commit ('setPostsStatus','error');
+        });
+    },
 };
 
 //Mutations is how we change the state. And can be traced on frontend. Unlike using only getters. Are synchronous
 const mutations = {
     setPostsStatus(state, status){
-        state.newsPostsStatus = status;
+        state.postsStatus = status;
     },
 
     setPosts(state, posts){
-        state.newsPosts = posts;
+        state.posts = posts;
     },
     updateMessage(state, message){
         state.postMessage = message;
     },
     pushPost(state, post){
-        state.newsPosts.data.unshift(post);
+        state.posts.data.unshift(post);
     },
     pushLikes(state, data){
-        state.newsPosts.data[data.postKey].data.attributes.likes = data.likes;
+        state.posts.data[data.postKey].data.attributes.likes = data.likes;
+    },
+    pushComments(state, data){
+        state.posts.data[data.postKey].data.attributes.comments = data.comments;
     },
 
 };

@@ -8,10 +8,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Post;
 
-class UserLikesTest extends TestCase
+class LikesTest extends TestCase
 {
     use RefreshDatabase;
-    // use DatabaseMigrations;
 
      /** @test */
     public function a_user_can_like_a_post()
