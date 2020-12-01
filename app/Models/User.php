@@ -60,6 +60,22 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function coverImage()
+    {
+        //HasOne so as to return only one record
+        return $this->hasOne(UserImage::Class)
+            ->orderByDesc('id')
+            ->where('location','cover');
+    }
+
+    public function profileImage()
+    {
+        //HasOne so as to return only one record
+        return $this->hasOne(UserImage::Class)
+            ->orderByDesc('id')
+            ->where('location','profile');
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::Class);
@@ -73,6 +89,11 @@ class User extends Authenticatable
     public function likedPosts()
     {
         return $this->belongsToMany(Post::class, 'likes','user_id','post_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(UserImage::class);
     }
 
 }

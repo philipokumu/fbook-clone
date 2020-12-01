@@ -2,8 +2,7 @@
   <div class="flex flex-col items-center" v-if="status.user === 'success' && user">
       <div class="relative mb-8">
           <div class="w-100 h-64 overflow-hidden">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Untersberg_Mountain_Salzburg_Austria_Landscape_Photography_%28256594075%29.jpeg" 
-                alt="User Background image" class=" object-cover w-full">
+            <UploadableImage image-width="1500" image-height="300" location="cover" :user-image="user.data.attributes.cover_image" class="cursor-pointer"/>
           </div>
           <div class="absolute flex items-center bottom-0 left-0 -mb-8 ml-12 z-20">
               <div class="w-32">
@@ -44,6 +43,7 @@
 <script>
 
 import Post from "../../Components/Post";
+import UploadableImage from"../../Components/UploadableImage";
 import { mapGetters } from 'vuex';
 
 export default {
@@ -51,6 +51,7 @@ export default {
 
     components: {
         Post,
+        UploadableImage
     },
 
     mounted() {
