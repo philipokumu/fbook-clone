@@ -65,7 +65,10 @@ class User extends Authenticatable
         //HasOne so as to return only one record
         return $this->hasOne(UserImage::Class)
             ->orderByDesc('id')
-            ->where('location','cover');
+            ->where('location','cover')
+            ->withDefault(function ($userImage){
+                $userImage->path = 'storage/user-images/default-cover-image.jpg';
+            });
     }
 
     public function profileImage()
@@ -73,7 +76,10 @@ class User extends Authenticatable
         //HasOne so as to return only one record
         return $this->hasOne(UserImage::Class)
             ->orderByDesc('id')
-            ->where('location','profile');
+            ->where('location','profile')
+            ->withDefault(function ($userImage){
+                $userImage->path = 'storage/user-images/default-profile-image.png';
+            });
     }
 
     public function posts()

@@ -2,7 +2,8 @@
   <div>
       <img :src="imageObject.data.attributes.path" 
         ref="userImage"
-        alt="User background image" class="object-cover w-full">
+        :alt="alt"
+        :class="classes">
     </div>
 </template>
 
@@ -17,11 +18,14 @@ export default {
         'imageWidth',
         'imageHeight',
         'location',
+        'classes',
+        'alt',
     ],
 
     data:()=>{
         return {
             dropzone: null,
+            uploadedImage: null,
         }
     },
 
@@ -44,12 +48,13 @@ export default {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
                 },
                 success: (e, res) => {
-                    alert('uploaded');
+                    this.uploadedImage = res;
                 }
             }
         },
         imageObject() {
-            return this.userImage
+            //Either load the current cover image or load the newly uploaded cover image on the fly
+            return this.uploadedImage || this.userImage;
         }
     }
 

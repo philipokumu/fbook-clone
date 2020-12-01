@@ -2,12 +2,23 @@
   <div class="flex flex-col items-center" v-if="status.user === 'success' && user">
       <div class="relative mb-8">
           <div class="w-100 h-64 overflow-hidden">
-            <UploadableImage image-width="1500" image-height="300" location="cover" :user-image="user.data.attributes.cover_image" class="cursor-pointer"/>
+            <UploadableImage image-width="1500"
+                image-height="300" 
+                location="cover" 
+                :user-image="user.data.attributes.cover_image"
+                classes="object-cover w-full"
+                alt="User background image"
+                class="cursor-pointer"/>
           </div>
           <div class="absolute flex items-center bottom-0 left-0 -mb-8 ml-12 z-20">
               <div class="w-32">
-                  <img src="https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg" 
-                  class=" object-cover w-32 h-32 border-gray-200 rounded-full shadow-lg" alt="User profile image">
+                  <UploadableImage image-width="1500"
+                        image-height="300" 
+                        location="profile" 
+                        :user-image="user.data.attributes.profile_image"
+                        classes="object-cover w-32 h-32 border-gray-200 rounded-full shadow-lg"
+                        alt="User profile image"
+                        class="cursor-pointer"/>
               </div>
               <p class="text-2xl text-gray-100 ml-4">{{user.data.attributes.name}}</p>
           </div>
