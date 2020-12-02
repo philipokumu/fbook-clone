@@ -27,7 +27,7 @@ class Post extends JsonResource
                     'comments'=> new CommentCollection($this->comments),
                     'body'=>$this->body,
                     'posted_at'=> $this->created_at->diffForHumans(),
-                    'image'=> $this->image,
+                    'image'=> url($this->image),
                 ]
             ],
             'links'=> [

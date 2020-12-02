@@ -9,9 +9,7 @@ const getters = {
         return state.posts;
     },
     newsStatus: state => {
-        return {
-            postsStatus: state.postsStatus,
-        };
+        return  state.postsStatus;
     },
     postMessage: state => {
         return state.postMessage;
@@ -38,6 +36,7 @@ const actions = {
         axios.post('/api/posts', {body: state.postMessage})
             .then(res => {
                 commit('pushPost', res.data);
+                commit ('setPostsStatus','success');
                 commit('updateMessage', '');
             })
             .catch(error =>{
@@ -93,7 +92,7 @@ const mutations = {
         state.postMessage = message;
     },
     pushPost(state, post){
-        state.posts.data.unshift(post);
+        state.posts.data.unshift(post); 
     },
     pushLikes(state, data){
         state.posts.data[data.postKey].data.attributes.likes = data.likes;

@@ -3,7 +3,7 @@
         <div class="flex flex-col p-4">
             <div class="flex items-center">
                 <div class="w-8">
-                    <img src="https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
+                    <img :src="post.data.attributes.posted_by.data.attributes.profile_image.data.attributes.path" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
                 </div>
                 <div class="ml-6">
                     <div class="text-sm font-bold">{{post.data.attributes.posted_by.data.attributes.name}}</div>
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="w-full" v-if="post.data.attributes.image">
+        <div class="w-full" v-if="post.data.attributes.image.length">
             <img :src="post.data.attributes.image">
         </div>
 
@@ -54,7 +54,7 @@
             </div>
             <div class="flex my-4 items-center" v-for="comment in post.data.attributes.comments.data">
                 <div class="w-8">
-                    <img src="https://cdn.pixabay.com/photo/2014/07/09/10/04/man-388104_960_720.jpg" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
+                    <img :src="comment.data.attributes.commented_by.data.attributes.profile_image.data.attributes.path" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
                 </div>
                 <div class="ml-4 flex-1">
                     <div class="bg-gray-200 rounded-lg p-2 text-sm">

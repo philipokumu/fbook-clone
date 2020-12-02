@@ -74,6 +74,7 @@ class UserImagesTest extends TestCase
          //Create user
          $this->actingAs($user = User::factory()->create(),'api');
 
+         //Create a fake file
          $file = UploadedFile::fake()->image('user-image.jpg');
  
          $this->post('/api/user-images', [
