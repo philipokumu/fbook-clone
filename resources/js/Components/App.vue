@@ -5,8 +5,12 @@
         <div class="flex overflow-y-hidden flex-1">
             <Sidebar />
 
-            <div class="overflow-x-hidden w-2/3">
+            <div class="overflow-x-hidden w-2/4">
                 <router-view :key="$route.fullPath"></router-view>
+            </div>
+
+            <div class="w-1/4">
+                <Chat />
             </div>
         </div>
     </div>
@@ -14,6 +18,7 @@
 
 <script>
     import Nav from './Nav';
+    import Chat from './Chat';
     import Sidebar from './Sidebar';
     import { mapGetters } from "vuex";
 
@@ -22,7 +27,14 @@
 
         components: {
             Nav,
-            Sidebar
+            Sidebar,
+            Chat,
+        },
+
+        data(){
+            return {
+                message:'',
+            }
         },
 
         mounted(){
@@ -36,7 +48,13 @@
         computed: {
             ...mapGetters({
                authUser: 'authUser' 
-            })
+            }),
+            send(){
+                if (this.message) {
+                    console.log(this.message);
+                    this.message = '';
+                }
+            },
         },
 
         watch: {

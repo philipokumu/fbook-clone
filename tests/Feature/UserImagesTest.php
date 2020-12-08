@@ -116,4 +116,62 @@ class UserImagesTest extends TestCase
                 ],
             ]);
     }
+
+    /** @test */
+    public function image_width_and_length_is_required()
+    {
+        $this->withoutExceptionHandling();
+        //Create user
+        $this->actingAs($user = User::factory()->create(),'api');
+
+        //Create a fake file
+        $file = UploadedFile::fake()->image('user-image.jpg');
+
+        $response = $this->post('/api/user-images', [
+            'image' => $file,
+            'width' => '',
+            'height' => '',
+            'location' => '',//is it profile image, cover image etc
+        ])->assertStatus(422);
+
+        //Assert file does exist in assigned location
+        // Storage::disk('public');
+
+        // $responseString = json_decode($response->getContent(), true);
+
+        // $this->assertArrayHasKey('image', $responseString['errors']['meta']);
+
+        //Fetching the first record which should be null
+        // $userImage = UserImage::first();
+
+        // $this->assertNull($userImage);
+
+        //Convert this to JSON as Laravel by default expects us to be 
+        //within a web application but we are using an api with no Laravel frontend
+        // $responseString = json_decode($response->getContent(), true);
+
+        // $response->assertJson([
+        //     'errors'=> [
+        //         'code' => 422,
+        //         'width' => 'Width is required',
+        //         'height' => 'Height is required', 
+        //     ]
+        // ]);
+    }
+
+    /** @test */
+    // public function a_body_is_required_to_leave_a_comment_on_a_post()  {
+    //     //Create user
+    //     $this->actingAs($user = User::factory()->create(),'api');
+    //     //Create post
+    //     $post = Post::factory()->create(['id'=>223]);
+
+    //     //Create a post request
+    //     $response = $this->post('/api/posts/'.$post->id.'/comment', [
+    //         'body'=>''])->assertStatus(422);
+
+    //     $responseString = json_decode($response->getContent(), true);
+
+    //     $this->assertArrayHasKey('body', $responseString['errors']['meta']);
+    // }
 }

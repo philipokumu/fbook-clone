@@ -4,7 +4,7 @@
         <p v-if="newsStatus==='loading'">Loading posts...</p>
         <Post v-for="(post, postKey) in posts.data" v-else :key="postKey" :post="post"/>
 
-        <p v-if="! loading && posts.data.length < 1">No posts found</p>
+        <p v-if="newsStatus!=='loading' && posts.data.length < 1">No posts found</p>
 
     </div>
 </template>
@@ -31,7 +31,6 @@ export default {
             newsStatus: 'newsStatus'
         })
     }
-    
 }
 </script>
 

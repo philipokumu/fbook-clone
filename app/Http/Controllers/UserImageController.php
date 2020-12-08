@@ -11,10 +11,10 @@ class UserImageController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'image' => '',
-            'width' => '',
-            'height' => '',
-            'location' => '',
+            'image' => 'required',
+            'width' => 'required',
+            'height' => 'required',
+            'location' => 'required',
         ]);
 
         //Original image saved
