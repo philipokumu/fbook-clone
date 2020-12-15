@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
 
     Route::get('auth-user', [App\Http\Controllers\AuthUserController::class, 'show']);
+    // Route::get('send', [App\Http\Controllers\ChatController::class, 'send']);
 
     Route::apiResources([
         '/posts' => App\Http\Controllers\PostController::class,
