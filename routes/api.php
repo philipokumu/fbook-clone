@@ -18,7 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->group(function () {
 
     Route::get('auth-user', [App\Http\Controllers\AuthUserController::class, 'show']);
-    // Route::get('send', [App\Http\Controllers\ChatController::class, 'send']);
+
+    //text chat route
+    Route::post('send', [App\Http\Controllers\ChatController::class, 'send']);
+
+    // Endpoints to call or receive calls.
+    Route::post('/video/call-user', 'App\Http\Controllers\VideoChatController@callUser');
+    Route::post('/video/accept-call', 'App\Http\Controllers\VideoChatController@acceptCall');
 
     Route::apiResources([
         '/posts' => App\Http\Controllers\PostController::class,

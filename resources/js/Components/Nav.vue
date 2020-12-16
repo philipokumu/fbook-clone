@@ -27,11 +27,11 @@
             <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center ">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d="M.5 11.6c0 3.4 1.7 6.3 4.3 8.3V24l3.9-2.1c1 .3 2.2.4 3.3.4 6.4 0 11.5-4.8 11.5-10.7C23.5 5.8 18.3 1 12 1S.5 5.8.5 11.6zm10.3-2.9l3 3.1 5.6-3.1-6.3 6.7-2.9-3.1-5.7 3.1 6.3-6.7z"/></svg>
             </router-link>
-            <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center ">
-                <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/video-chat-52-759359.png" alt="profile image for user" class="w-5 h-5 object-cover rounded-full">
+            <router-link to="/videochat" class="px-6 border-b-2 border-white h-full flex items-center ">
+                <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/video-chat-52-759359.png" alt="videochat" class="w-5 h-5 object-cover rounded-full">
             </router-link>
             <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center ">
-                <img src="https://www.freepnglogos.com/uploads/games-png/games-pad-icon-12.png" alt="profile image for user" class="w-5 h-5 object-cover rounded-full">
+                <img src="https://www.freepnglogos.com/uploads/games-png/games-pad-icon-12.png" alt="games" class="w-5 h-5 object-cover rounded-full">
             </router-link>
         </div>
         <div class="w-1/3 flex justify-end">

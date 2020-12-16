@@ -18,8 +18,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Auth::routes();
-// Route::get('chat', [App\Http\Controllers\ChatController::class, 'chat']);
-Route::post('send', [App\Http\Controllers\ChatController::class, 'send']);
+
+Route::get('/video-chat', [App\Http\Controllers\VideoChatController::class, 'index']);
 
 Route::get('{any}', [App\Http\Controllers\AppController::class, 'index'])
     ->where('any','.*')

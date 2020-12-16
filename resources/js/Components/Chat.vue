@@ -2,14 +2,15 @@
   <div class="absolute bottom-0 mx-5">
       <div class=" bg-white w-64">
             <div class="bg-blue-500 px-8 rounded-t">John Doe Chat</div>
-        <ul class=" overflow-y-scroll h-64" v-chat-scroll>
-            <chat-message v-for="(chatMessage, messageKey) in chat.message" 
-            :key="messageKey" 
-            :chatMessage="chatMessage"
-            :coloring="chat.coloring"
-            :user="chat.user[messageKey]"/>
-            
-        </ul>
+            <ul class=" overflow-y-scroll h-64" v-chat-scroll>
+                <chat-message v-for="(chatMessage, messageKey) in chat.message" 
+                :key="messageKey" 
+                :chatMessage="chatMessage"
+                :time="chat.time[messageKey]"
+                :user="chat.user[messageKey]"/>
+                
+            <div class="px-4 rounded inline text-sm bg-green-100" v-if="typing">{{typing}}</div>
+            </ul>
         <input class="px-4 w-full" placeholder="Type your message.." v-model="message" @keyup.enter="send()">
       </div>
   </div>
@@ -25,12 +26,20 @@ export default {
             chat: {
                 message: [],
                 user: [],
-                coloring: [],
-            }
+                time: [],
+            },
+            typing: '',
+        }
+    },
+    watch:{
+        message(){
+            Echo.private('chat')
+            .whisper('typing', {
+                name: this.message
+            });
         }
     },
     mounted(){
-            this.$store.dispatch('fetchAuthUser');
             this.listen();
         },
     methods: {
@@ -38,9 +47,10 @@ export default {
             if (this.message) {
                 this.chat.message.push(this.message);
                 this.chat.user.push('you');
-                this.chat.coloring.push('green');
+                let today = new Date();
+                this.chat.time.push(today.getHours() + ":" + today.getMinutes());
 
-                axios.post('/send',{message: this.message})
+                axios.post('/api/send',{message: this.message})
                 .then(res => {
                     console.log(res);
                     this.message = '';
@@ -52,11 +62,20 @@ export default {
         },
         listen(){
             Echo.private('chat')
-            .listen('ChatEvent',(e)=>{
-                this.chat.message.push(e.message);
-                this.chat.user.push(e.user_name);
-                this.chat.coloring.push('red');
-            })
+                .listen('ChatEvent',(e)=>{
+                    this.chat.message.push(e.message);
+                    this.chat.user.push(e.user_name);
+                    let today = new Date();
+                    this.chat.time.push(today.getHours() + ":" + today.getMinutes());
+                })
+                .listenForWhisper('typing', (e) => {
+                    if (e.name != ''){
+                        this.typing = 'typing...'
+                    }
+                    else {
+                        this.typing = ''
+                    }
+                });
         }
     }
 }

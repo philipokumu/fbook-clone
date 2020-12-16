@@ -7,6 +7,7 @@
 
             <div class="overflow-x-hidden w-2/4">
                 <router-view :key="$route.fullPath"></router-view>
+                
             </div>
 
             <div class="w-1/4">
