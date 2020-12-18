@@ -9,7 +9,7 @@ const app = new vue({
     el: '#app',
 
     components: {
-        App
+        App,
     },
 
     router,

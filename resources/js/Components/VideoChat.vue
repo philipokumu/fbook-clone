@@ -7,7 +7,7 @@
             <button
               type="button"
               class="btn btn-primary mr-2"
-              v-for="user in allusers"
+              v-for="user in allUsers"
               :key="user.id"
               @click="placeVideoCall(user.id, user.name)"
             >
@@ -104,8 +104,8 @@ import Peer from "simple-peer";
 import { getPermissions } from "../helpers";
 export default {
   props: [
-    "allusers",
-    "authuserid",
+    "allUsers",
+    "authUserId",
     "turn_url",
     "turn_username",
     "turn_credential",
@@ -139,7 +139,7 @@ export default {
     incomingCallDialog() {
       if (
         this.videoCallParams.receivingCall &&
-        this.videoCallParams.caller !== this.authuserid
+        this.videoCallParams.caller !== this.authUserId
       ) {
         return true;
       }
@@ -149,9 +149,9 @@ export default {
     callerDetails() {
       if (
         this.videoCallParams.caller &&
-        this.videoCallParams.caller !== this.authuserid
+        this.videoCallParams.caller !== this.authUserId
       ) {
-        const incomingCaller = this.allusers.filter(
+        const incomingCaller = this.allUsers.filter(
           (user) => user.id === this.videoCallParams.caller
         );
 
@@ -242,7 +242,7 @@ export default {
           .post("/video/call-user", {
             user_to_call: id,
             signal_data: data,
-            from: this.authuserid,
+            from: this.authUserId,
           })
           .then(() => {})
           .catch((error) => {
@@ -388,7 +388,7 @@ export default {
       if (!this.mutedVideo) this.toggleMuteVideo();
       if (!this.mutedAudio) this.toggleMuteAudio();
       this.stopStreamedVideo(this.$refs.userVideo);
-      if (this.authuserid === this.videoCallParams.caller) {
+      if (this.authUserId === this.videoCallParams.caller) {
         this.videoCallParams.peer1.destroy();
       } else {
         this.videoCallParams.peer2.destroy();

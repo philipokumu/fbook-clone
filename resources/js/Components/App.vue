@@ -5,21 +5,18 @@
         <div class="flex overflow-y-hidden flex-1">
             <Sidebar />
 
-            <div class="overflow-auto w-2/4">
+            <div class="overflow-auto w-3/4">
                 <router-view :key="$route.fullPath"></router-view>
                 
-            </div>
+            </div> 
 
-            <div class="w-1/4">
-                <TextChat />
-            </div>
+
         </div>
     </div>
 </template>
 
 <script>
     import Nav from './Nav';
-    import TextChat from './TextChat';
     import Sidebar from './Sidebar';
     import { mapGetters } from "vuex";
 
@@ -29,7 +26,6 @@
         components: {
             Nav,
             Sidebar,
-            TextChat,
         },
 
         data(){

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <video-chat :allUsers="allUsers" :authUserId="authUser.data.user_id" :turn_url="turn.url"
+      <VideoChat :allUsers="allUsers" :authUserId="authUser.data.user_id" :turn_url="turn.url"
         :turn_username="turn.username" :turn_credential="turn.credential" />
   </div>
 </template>

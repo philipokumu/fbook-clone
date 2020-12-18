@@ -12,25 +12,25 @@
                             <path fill-rule="evenodd" d="M20.2 18.1l-1.4 1.3-5.5-5.2 1.4-1.3 5.5 5.2zM7.5 12c-2.7 0-4.9-2.1-4.9-4.6s2.2-4.6 4.9-4.6 4.9 2.1 4.9 4.6S10.2 12 7.5 12zM7.5.8C3.7.8.7 3.7.7 7.3s3.1 6.5 6.8 6.5c3.8 0 6.8-2.9 6.8-6.5S11.3.8 7.5.8z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <input type="text" name="search" class="bg-gray-200 h-8 w-56 pl-8 rounded-full 
+                    <input type="text" name="search" class="bg-gray-200 h-8 w-56 pl-8 rounded-full hover:bg-gray-300  
                     text-sm focus:outline-none focus:shadow-outline" placeholder="search Fbook">
                 </div>
             </div>
         </div>
         <div class="w-1/3 flex justify-center h-full">
-            <router-link to="/" class="px-6 border-b-2 border-blue-500 h-full flex items-center ">
+            <router-link to="/" class="px-6 border-b-2 border-blue-500 h-full flex items-center hover:bg-gray-300 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d="M22.6 11l-9.9-9c-.4-.4-1.1-.4-1.5 0l-9.9 9c-.3.3-.5.8-.3 1.2.2.5.6.8 1.1.8h1.6v9c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-5.5h3.2V22c0 .4.3.6.6.6h5.4c.4 0 .6-.3.6-.6v-9h1.6c.5 0 .9-.3 1.1-.7.3-.5.2-1-.2-1.3zm-2.5-8h-4.3l5 4.5V3.6c0-.3-.3-.6-.7-.6z"/></svg>
             </router-link>
-            <router-link :to="'/users/' + authUser.data.user_id" class="px-6 border-b-2 border-white h-full flex items-center ">
+            <router-link :to="'/users/' + authUser.data.user_id" class="px-6 border-b-2 border-white h-full flex items-center hover:bg-gray-300 rounded">
                 <img :src="authUser.data.attributes.profile_image.data.attributes.path" alt="profile image for user" class="w-8 h-8 object-cover rounded-full">
             </router-link>
-            <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center ">
+            <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center hover:bg-gray-300 rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-5 h-5"><path d="M.5 11.6c0 3.4 1.7 6.3 4.3 8.3V24l3.9-2.1c1 .3 2.2.4 3.3.4 6.4 0 11.5-4.8 11.5-10.7C23.5 5.8 18.3 1 12 1S.5 5.8.5 11.6zm10.3-2.9l3 3.1 5.6-3.1-6.3 6.7-2.9-3.1-5.7 3.1 6.3-6.7z"/></svg>
             </router-link>
-            <router-link to="/videochat" class="px-6 border-b-2 border-white h-full flex items-center ">
+            <router-link to="/videochat" class="px-6 border-b-2 border-white h-full flex items-center hover:bg-gray-300 rounded">
                 <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/video-chat-52-759359.png" alt="videochat" class="w-5 h-5 object-cover rounded-full">
             </router-link>
-            <router-link to="/" class="px-6 border-b-2 border-white h-full flex items-center ">
+            <router-link to="/category" class="px-6 border-b-2 border-white h-full flex items-center hover:bg-gray-300 rounded">
                 <img src="https://www.freepnglogos.com/uploads/games-png/games-pad-icon-12.png" alt="games" class="w-5 h-5 object-cover rounded-full">
             </router-link>
         </div>

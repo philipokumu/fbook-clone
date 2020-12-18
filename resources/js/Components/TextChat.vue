@@ -1,7 +1,7 @@
 <template>
-  <div class="absolute bottom-0 mx-5">
-      <div class=" bg-white w-64">
-            <div class="bg-blue-500 px-8 rounded-t">John Doe Chat</div>
+  <div class="absolute bottom-0">
+      <div class=" bg-white w-56">
+            <div class="bg-blue-500 px-8 rounded-t">Chat</div>
             <ul class=" overflow-y-scroll h-64" v-chat-scroll>
                 <text-chat-message v-for="(chatMessage, messageKey) in chat.message" 
                 :key="messageKey" 
@@ -11,7 +11,7 @@
                 
             <div class="px-4 rounded inline text-sm bg-green-100" v-if="typing">{{typing}}</div>
             </ul>
-        <input class="px-4 w-full" placeholder="Type your message.." v-model="message" @keyup.enter="send()">
+        <input class="px-4 w-full hover:bg-gray-200 h-10 focus:outline-none focus:shadow-outline" placeholder="Type your message.." v-model="message" @keyup.enter="send()">
       </div>
   </div>
 </template>
@@ -43,14 +43,14 @@ export default {
             this.listen();
         },
     methods: {
-        send(){
+        async send(){
             if (this.message) {
                 this.chat.message.push(this.message);
                 this.chat.user.push('you');
                 let today = new Date();
                 this.chat.time.push(today.getHours() + ":" + today.getMinutes());
 
-                axios.post('/api/send',{message: this.message})
+                await axios.post('/api/send',{message: this.message})
                 .then(res => {
                     console.log(res);
                     this.message = '';

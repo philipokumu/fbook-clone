@@ -52,11 +52,11 @@ const getters = {
 const actions = {
 
     //Loaded when loading a profile
-    fetchUser({commit, dispatch}, userId){
+    async fetchUser({commit, dispatch}, userId){
         commit ('setUserStatus','loading');
 
         //Fetch specific user profile
-        axios.get('/api/users/' + userId)
+        await axios.get('/api/users/' + userId)
         .then (res => {
            commit('setUser', res.data);
            commit ('setUserStatus','success');
@@ -68,13 +68,13 @@ const actions = {
     },
 
     //Loaded when friend request button is clicked
-    sendFriendRequest({commit,getters}, friendId) {   
+    async sendFriendRequest({commit,getters}, friendId) {   
         //First check that you are not sending the request twice
         if (getters.friendButtonText !== 'Add friend') {
             return;
         }
         // Send the friend request to the api database
-        axios.post('/api/friend-request/',{'friend_id': friendId})
+        await axios.post('/api/friend-request/',{'friend_id': friendId})
         .then (res => {
             commit ('setUserFriendship',res.data);
         })
@@ -82,9 +82,9 @@ const actions = {
         });
     },
 
-    acceptFriendRequest({commit,state}, userId) {     
+    async acceptFriendRequest({commit,state}, userId) {     
         // Send the accept friend request response to the api database
-        axios.post('/api/friend-request-response/',{'user_id': userId, 'status': 1})
+        await axios.post('/api/friend-request-response/',{'user_id': userId, 'status': 1})
         .then (res => {
             commit ('setUserFriendship',res.data);
         })
@@ -92,9 +92,9 @@ const actions = {
         });
     },
 
-    ignoreFriendRequest({commit,state}, userId) {     
+    async ignoreFriendRequest({commit,state}, userId) {     
         // Send the ignore friend request response to the api database
-        axios.delete('/api/friend-request-response/delete',{ data: {'user_id': userId}})
+        await axios.delete('/api/friend-request-response/delete',{ data: {'user_id': userId}})
         .then (res => {
             commit ('setUserFriendship',null);
         })

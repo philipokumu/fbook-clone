@@ -4,6 +4,7 @@ import vueRouter from 'vue-router';
 import NewsFeed from './Views/NewsFeed';
 import UserShow from './Views/Users/Show';
 import VideoChatPage from './Views/VideoChatPage';
+import CategoryPage from './Views/CategoryPage';
 
 vue.use(vueRouter);
 
@@ -24,7 +25,13 @@ export default new vueRouter({
         {
             path: '/videochat', name: 'videochat', component: VideoChatPage,
             meta: {title: 'Video Chat'}
+        },
+
+        {
+            path: '/category', name: 'category', component: CategoryPage,
+            meta: {title: 'Category'}
         }
+
     ]
 });
 

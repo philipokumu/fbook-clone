@@ -18,10 +18,10 @@ const getters = {
 
 //Dispatches action, this is where the mounted logic is placed. Actions can be asynchronous.
 const actions = {
-    fetchNewsPosts({commit, state}){
+    async fetchNewsPosts({commit, state}){
         commit('setPostsStatus', 'loading');
 
-        axios.get('/api/posts')
+        await axios.get('/api/posts')
             .then(res => {
                 commit('setPosts', res.data);
                 commit('setPostsStatus', 'success');
@@ -30,10 +30,10 @@ const actions = {
                 commit('setPostsStatus', 'error');
             });
     },
-    postMessage({commit, state}){
+    async postMessage({commit, state}){
         commit('setPostsStatus', 'loading');
 
-        axios.post('/api/posts', {body: state.postMessage})
+        await axios.post('/api/posts', {body: state.postMessage})
             .then(res => {
                 commit('pushPost', res.data);
                 commit ('setPostsStatus','success');
@@ -43,8 +43,8 @@ const actions = {
                 commit('setPostsStatus', 'error');
             });
     },
-    likePost({commit, state}, data){
-        axios.post('/api/posts/'+ data.postId + '/like')
+    async likePost({commit, state}, data){
+        await axios.post('/api/posts/'+ data.postId + '/like')
             .then(res => {
                 commit('pushLikes', {likes: res.data, postKey: data.postKey});
             })
@@ -52,8 +52,8 @@ const actions = {
                 // commit('setPostsStatus', 'error');
             });
     },
-    commentPost({commit, state}, data){
-        axios.post('/api/posts/'+ data.postId + '/comment',{body: data.body})
+    async commentPost({commit, state}, data){
+        await axios.post('/api/posts/'+ data.postId + '/comment',{body: data.body})
             .then(res => {
                 commit('pushComments', {comments: res.data, postKey: data.postKey});
             })
@@ -63,11 +63,11 @@ const actions = {
     },
 
     //Loaded when loading a profile
-    fetchUserPosts({commit, dispatch}, userId){
+    async fetchUserPosts({commit, dispatch}, userId){
         commit ('setPostsStatus','loading');
 
         //Fetch specific user posts for their profile
-        axios.get('/api/users/'+ userId + '/posts')
+        await axios.get('/api/users/'+ userId + '/posts')
             .then(res => {
             commit('setPosts', res.data);
             commit ('setPostsStatus','success');
