@@ -3,7 +3,7 @@ import vue from 'vue';
 import vueRouter from 'vue-router';
 import NewsFeed from './Views/NewsFeed';
 import UserShow from './Views/Users/Show';
-import VideoChat from './Views/Video/VideoChat';
+import VideoChatPage from './Views/VideoChatPage';
 
 vue.use(vueRouter);
 
@@ -22,7 +22,7 @@ export default new vueRouter({
         },
 
         {
-            path: '/videochat', name: 'videochat', component: VideoChat,
+            path: '/videochat', name: 'videochat', component: VideoChatPage,
             meta: {title: 'Video Chat'}
         }
     ]

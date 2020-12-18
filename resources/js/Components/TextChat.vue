@@ -3,7 +3,7 @@
       <div class=" bg-white w-64">
             <div class="bg-blue-500 px-8 rounded-t">John Doe Chat</div>
             <ul class=" overflow-y-scroll h-64" v-chat-scroll>
-                <chat-message v-for="(chatMessage, messageKey) in chat.message" 
+                <text-chat-message v-for="(chatMessage, messageKey) in chat.message" 
                 :key="messageKey" 
                 :chatMessage="chatMessage"
                 :time="chat.time[messageKey]"
@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import ChatMessage from './ChatMessage.vue';
+import TextChatMessage from './TextChatMessage.vue';
 export default {
-  components: { ChatMessage },
+  components: { TextChatMessage },
     data(){
         return {
             message:'',

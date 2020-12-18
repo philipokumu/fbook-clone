@@ -1,8 +1,12 @@
 <template>
     <div class="flex flex-col items-center py-4">
         <NewPost />
+        <!-- <div class="overflow-y-scroll"> -->
         <p v-if="newsStatus==='loading'">Loading posts...</p>
+
         <Post v-for="(post, postKey) in posts.data" v-else :key="postKey" :post="post"/>
+
+        <!-- </div> -->
 
         <p v-if="newsStatus!=='loading' && posts.data.length < 1">No posts found</p>
 
@@ -21,7 +25,7 @@ export default {
         NewPost, Post
     },
 
-    mounted() {
+    created() {
         this.$store.dispatch('fetchNewsPosts');
     },
 
