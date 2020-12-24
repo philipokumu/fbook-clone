@@ -1,4 +1,6 @@
 <template>
+    <!-- Page layout codepen sample -->
+    <!-- https://codepen.io/aliaadel/pen/rKZGzz -->
     <div class="flex flex-col flex-1 h-screen overflow-y-hidden" v-if="authUser">
         <Nav />
 
