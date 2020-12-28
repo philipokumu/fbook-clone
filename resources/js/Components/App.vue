@@ -4,16 +4,14 @@
     <div class="flex flex-col flex-1 h-screen overflow-y-hidden" v-if="authUser">
         <Nav />
 
-        <div class="flex overflow-y-hidden flex-1">
-            <Sidebar />
+        <!-- <div class="flex overflow-y-hidden flex-1"> -->
+            <!-- <Sidebar /> -->
 
-            <div class="overflow-auto w-3/4">
+            <!-- <div class="overflow-auto w-3/4"> -->
                 <router-view :key="$route.fullPath"></router-view>
                 
-            </div> 
-
-
-        </div>
+            <!-- </div>  -->
+        <!-- </div> -->
     </div>
 </template>
 
