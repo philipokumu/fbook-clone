@@ -1,5 +1,22 @@
 <template>
   <div>
+      
+      <div id="elementre" class="flex" @click="easyScroll()">
+          <div>Start</div>
+          <div>Stop</div>
+          <div>Start</div>
+          <div>Stop</div>
+      <div>Start</div>
+          <div>Stop</div>
+      <div>Start</div>
+          <div>Stop</div>
+      <div>Start</div>
+          <div>Stop</div>
+        <div>Start</div>
+          <div>Stop</div>
+      
+      </div>
+
       <section class="bg-white py-2">
 
         <div class="container mx-auto flex items-center flex-wrap pb-12 overflow-auto">
@@ -153,7 +170,20 @@
 </template>
 
 <script>
+import easyScroll from 'easy-scroll';
 export default {
+    
+    computed: {
+        easyScroll(){
+            return {
+            'scrollableDomEle': window.querySelector('#elementre'),
+            'direction': 'left',
+            'duration': 2000,
+            'easingPreset': 'easeInQuad',
+            'scrollAmount': 1000
+            }
+        },
+    }
 
 }
 </script>

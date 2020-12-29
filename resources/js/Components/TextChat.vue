@@ -11,7 +11,9 @@
                 
             <div class="px-4 rounded inline text-sm bg-green-100" v-if="typing">{{typing}}</div>
             </ul>
-        <input class="px-4 w-full hover:bg-gray-200 h-10 focus:outline-none focus:shadow-outline" placeholder="Type your message.." v-model="message" @keyup.enter="send()">
+        <input class="px-4 w-full hover:bg-gray-200 h-10 focus:outline-none focus:shadow-outline" 
+            placeholder="Type your message.." v-model="message" 
+            @keyup.enter="send()">
       </div>
   </div>
 </template>

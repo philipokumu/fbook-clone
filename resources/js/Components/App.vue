@@ -4,14 +4,8 @@
     <div class="flex flex-col flex-1 h-screen overflow-y-hidden" v-if="authUser">
         <Nav />
 
-        <!-- <div class="flex overflow-y-hidden flex-1"> -->
-            <!-- <Sidebar /> -->
-
-            <!-- <div class="overflow-auto w-3/4"> -->
-                <router-view :key="$route.fullPath"></router-view>
+        <router-view :key="$route.fullPath"></router-view>
                 
-            <!-- </div>  -->
-        <!-- </div> -->
     </div>
 </template>
 
@@ -47,12 +41,6 @@
             ...mapGetters({
                authUser: 'authUser' 
             }),
-            send(){
-                if (this.message) {
-                    console.log(this.message);
-                    this.message = '';
-                }
-            },
         },
 
         watch: {

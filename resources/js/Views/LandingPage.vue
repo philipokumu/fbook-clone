@@ -22,7 +22,7 @@
             </div>
 
             <div class="w-full md:w-1/3 xl:w-1/4 p-3 flex flex-col relative hover:grow">
-                <a href="#">
+                <router-link to="/newsfeed" class="hover:bg-gray-300 rounded">
                     <img class="hover:shadow-lg rounded-md" src="https://images.unsplash.com/photo-1508423134147-addf71308178?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80">
                     <div class="pt-3 flex items-center justify-between absolute top-2 left-16">
                         <div class="flex flex-col">
@@ -35,7 +35,7 @@
                             <p class="pt-1 text-blue-700 item center">£9.93</p>
                         </div>
                     </div>
-                </a>
+                </router-link>
             </div>
 
             
